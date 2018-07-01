@@ -1,0 +1,56 @@
+
+ <!DOCTYPE html>
+ <html>
+   <head>
+     <meta charset="UTF-8">
+     
+     <title>validation</title>
+         <style>
+            input {margin: 5px;}
+             .ask-button {background-color:  hotpink; height: 50px; text-shadow: -1px -1px black; font-size: 16px; border-radius: 10px; outline: none; border-right: none; border-bottom: none; box-shadow: 2px 3px 5px black;  position: relative;}  
+             .ask-button:hover { top:2px; left: 1px;  }
+             .ask-button:active {  box-shadow: none; transition: 0.4s linear;}   
+       </style>
+       <script src="HashStorage.js"></script>
+       
+        </head>
+       <body>
+           <p>Для внесения вашего сайта в каталог, заполните форму:</p>
+        <form  name="valid-form"  id="valid-form">
+            <label> Разработчики <input type="text" name="developer" id="developer" >   </label>    </br>
+            <label> Название сайта <input type="text" name="site" id="site" >   </label>  </br>
+            <label> URL сайта <input type="url" name="urlSite" id="urlSite">   </label>  </br>
+            <label> Дата запуска сайта <input type="date" name="date" id="date" >   </label>  </br>
+            <label> Посетителей в сутки <input type="number" name="numberPeople" min="0" id="numberPeople" >   </label>  </br>
+            <label> E-mail для связи <input type="email" name="E-mail" id="E-mail" >   </label>  </br>
+            <label>Рубрика каталога<select name="katalog" id="katalog">  
+                <option value="1">Бытовая техника</option>
+                <option value="2">Здоровье</option>
+                <option value="3"> Домашний уют</option>
+
+            </select></label>  </br>
+            <label>Размещение<input type="radio" id="radio" name="radio"> <span>бесплатное</span>  
+                <input type="radio" id="radio"name="radio"> <span>платное</span>
+                <input type="radio" id="radio"name="radio"> <span>VIP</span>
+            
+            </label>  </br>
+            <label>Разрешить отзывы <input type="checkbox" id="check"> </label> </br>
+            <label> Описание сайта</label> </br>
+            <textarea name="forText" placeholder="Немного текста">    </textarea> </br>
+            <label> <input type="submit" name="" id="send"> </label>
+
+
+
+
+
+
+
+
+
+        </form>   
+  
+       
+       </body>
+       
+ </html>
+     

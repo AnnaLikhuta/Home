@@ -1,8 +1,10 @@
 function HashStorage ( ){
+    //
    var self=this; 
    self.objInfo={};
    self.addValue = function (key,value){
-     self.objInfo[key]=value; // почему не срабатывал self.key=value
+     self.objInfo[key]=value; 
+
          }
 
     self.getValue = function(key){
@@ -15,16 +17,17 @@ function HashStorage ( ){
     }
     self.deleteValue = function(key){
         if(!self.objInfo[key]){
-            return console.log('false. elem is not finded')
+            return false;
         }
         else
         delete self.objInfo[key];
-        return console.log('true. elem delete')
+        return true;
     }
     self.getKeys = function(){
-        for (var k in self.objInfo){
-         console.log( k);
-         console.log(self.objInfo[k]) ;}
+        var arr=[];
+        for (var k in self.objInfo)
+      arr.push(k);
+        return arr;
     }
 
 }
@@ -35,13 +38,14 @@ function askInfo() {
     var nameCoctail = prompt('Введите название коктеля')
     var value={};
     var nameAlgol = confirm('Какой алкоголь входит в состав')
-    if( nameAlgol==false){
+   /* if( nameAlgol==false){
     nameAlgol='алкоголь отсутствует';    }
     else{
-        nameAlgol='алкоголь есть';    }
+        nameAlgol='алкоголь есть';    }*/
+
     value['Алкоголь']=nameAlgol;
-     var nameIngridient = prompt('Советы по приготовлению');
-    value['Ингридиенты']=nameIngridient;
+    // var nameIngridient = prompt('Советы по приготовлению');
+    value['Ингридиенты']=prompt('Советы по приготовлению');;
     //console.log(value);
       drinkStorage.addValue(nameCoctail, value);
 }
@@ -54,20 +58,28 @@ function getInfo () {
     }
     else{
         console.log('Коктель:  ' + nameCoctail)
+        if(drink['Алкоголь']==true) {
+            drink['Алкоголь']='Алкоголь есть'
+        }
+        else {
+            drink['Алкоголь']='Алкоголь отсутствует';
+        }
+       
         console.log(drink);
     }
 }
 
 function deleteCoctail (){
     var nameCoctail = prompt('Название коктеля, который желаете удалить');
-    drinkStorage.deleteValue(nameCoctail);
-   
+    var result = drinkStorage.deleteValue(nameCoctail);
+   result?console.log('Данный напиток успешно удален'):console.log('Данный напиток отсутствует');
 
 }
 function allCoctail (){
     console.log('Имеются следующие напитки');
-    //console.log();
-    drinkStorage.getKeys();
+    var result = drinkStorage.getKeys();
+    console.log( result.join(', ') );
+
 
 }
 

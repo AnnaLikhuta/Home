@@ -157,6 +157,7 @@ function abc(label){ // создать label, input
   for( var i=0; i<=arrVar.length-1; i++){
     elemInput = document.createElement('input')
     elemInput.type='radio';
+    elemInput.name='abc';
     elemInput.value=i+1;
     spanElem = document.createElement('span');
   spanElem.appendChild(document.createTextNode(arrVar[i].text));
