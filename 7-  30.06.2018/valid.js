@@ -35,7 +35,7 @@ var elemSiteError = document.getElementById('site-error');
 
  var elemKatalog = document.getElementById('katalog');
  var elemKatalogError = document.getElementById('katalog-error');
- elemKatalog.onblur = validKatalog;
+ elemKatalog.onchange = validKatalog;
 
  
  var elemRadioError = document.getElementById('radio-error');
@@ -168,7 +168,7 @@ function validEmail(EO){ // проверка на пустоту и на сод�
                 return true; 
             }
         if(allRight==false && EO.currentTarget==elem){
-                elemNumberPeople.focus();
+            elemEmail.focus();
         }
     }
 
