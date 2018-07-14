@@ -1,3 +1,10 @@
+//когда кликаешь  по мячу, то срабатывает mousedown -> dragstart-> dragend
+// а вот mouseup  нет. по нему хочу увидеть конечные координаты картинки 
+// после перемещения
+// кликаешь по пустому участку - есть mousedown->  mouseup
+// пол логике должно получаться,только вот не получется 
+
+
 
 var elem= document.getElementById('forImage')
 var elemImg= elem.getElementsByTagName('img');
