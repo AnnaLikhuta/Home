@@ -11,8 +11,22 @@ function setPosition(elemImg){
          coords[i]= getCoords(elemImg[i]);
          elemImg[i].onmousedown = onMouseDown;
             }
+           
+
             // с обычным циклом работает.
             // а можно ли его через foreach реализовать ?
+            // при попытке вызвать была ошибка forEach is not a function 
+                 /*
+               function setStylePosition(v,i){
+              v.style.position='absolute';
+              v.style.left=coords[i].left+'px';
+                v.style.top=coords[i].top+'px';
+            }
+            elemImg.forEach(setStylePosition);
+
+
+
+            */
 
    for(var j=0; j<=coords.length-1; j++) {
       elemImg[j].style.position='absolute';
