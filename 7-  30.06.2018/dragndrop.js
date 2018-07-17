@@ -17,7 +17,7 @@ function setPosition(elemImg){ //задать начальное позицио�
     } 
 }
 setPosition(elemImg);
-var draggedBall={};
+
 
 document.addEventListener('mouseup',mouseUp,false )
 document.addEventListener('mousedown',mouseDown,false )
@@ -76,8 +76,73 @@ function mouseUp(EO){ //отпускание кнопки мыши
     
 
 }
-
+-----------------------------------------------------
   
+// вторая попытка реализации
 
+var elem= document.getElementById('forImage')
+var elemImg= elem.getElementsByTagName('img');
+
+function setPosition(elemImg){ //задать начальное позиционирование
+    for(var i=0; i<=elemImg.length-1; i++){
+        elemImg[i].style.position='relative';
+       // elemImg[i].onmousedown= onMouseDown    
+    } 
+}
+setPosition(elemImg);
+var draggedBall={};
+document.addEventListener('mousedown', onMouseDown, false);
+
+document.addEventListener('mouseup', onMouseUp, false);
+document.addEventListener('mousemove', onMouseMove, false);
+
+
+function onMouseDown(EO){
+    EO=EO||window.event;
+    draggedBall={}
+    draggedBall.target=EO.target;
+ 
+     draggedBall.shiftX= EO.pageX-getCoords(draggedBall.target).left;
+     draggedBall.shiftY= EO.pageY-getCoords(draggedBall.target).top;
+          console.log( draggedBall)
+         // draggedBall.target.style.position = 'fixed';
+         elem.appendChild( draggedBall.target);
+         onMouseMove(EO);
+         return draggedBall;
+}
+
+function onMouseMove(EO){
+    EO=EO||window.event;
+    console.log( draggedBall);
+   // EO.preventDefault();
+  // console.log( draggedBall)
+   // draggedBall.target.style.left= EO.pageX-draggedBall.shiftX+ 'px';
+  //  draggedBall.target.style.top= EO.pageY-draggedBall.shiftY+ 'px';
+  EO.target.style.left= EO.pageX-draggedBall.shiftX+ 'px';
+  EO.target.style.top= EO.pageY-draggedBall.shiftY+ 'px';
+}
+
+function onMouseUp(EO){
+    EO=EO||window.event;
+   
+    draggedBall={};
+    document.onmousemove=null;
+    document.onmouseup=null;
+   //document.removeEventListener('mousemove', onMouseMove, false);
+  // document.removeEventListener('mouseup', onMouseUp, false);
+   
+
+}
+
+
+function getCoords(elem) {   // кроме IE8-
+    var box = elem.getBoundingClientRect();
+    return {
+      top: box.top + pageYOffset,
+      left: box.left + pageXOffset
+    };
+  }
+  
+  
 
 
