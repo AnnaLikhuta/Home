@@ -1,4 +1,6 @@
 function vowels(){
+
+
     function getStr(){
         var answer= prompt('Введите пожалуйста любое слово');
         var countTry=0;
@@ -8,9 +10,11 @@ function vowels(){
         }
         return answer;
     }
+
    var countVowels=0;
-   var vowels='аоуэяиеёюы';
     var strArray=getStr().split('');
+        var vowels='аоуэяиеёюы'; //  для проверки
+
 
 //метод forEach
    // console.log(strArray);
