@@ -1,4 +1,4 @@
-function vowels(){
+
     function getWord(){
         var str= prompt('Введите пожалуйста любое слово');
         var countTry=0;
@@ -26,5 +26,3 @@ function vowels(){
   var count= checkWord(vowelsArray, str );
 
     console.log('Количество гласных букв составляет: '+count);
-    return;
-}

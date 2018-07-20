@@ -1,4 +1,4 @@
-function palindrom() {
+
     var str=prompt('Ввести фразу для проверки');
     var smallStr=str.toLowerCase(); // к нижнему регистру
 
@@ -44,4 +44,4 @@ function palindrom() {
     var newStr= editeWord(smallStr);
    var count= checkWord(newStr);
    printAnswer(count);
-}
+

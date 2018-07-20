@@ -1,19 +1,16 @@
-function vowels(){
-
-
-    function getStr(){
-        var answer= prompt('Введите пожалуйста любое слово');
-        var countTry=0;
-                while(answer==null && countTry<=2 ) {
-                    answer=prompt('Давайте попробуем еще раз ввести слово');
-            countTry++;
-        }
-        return answer;
+function getStr(){
+    var answer= prompt('Введите пожалуйста любое слово');
+    var countTry=0;
+            while(answer==null && countTry<=2 ) {
+                answer=prompt('Давайте попробуем еще раз ввести слово');
+        countTry++;
     }
+    return answer;
+}
 
-   var countVowels=0;
-    var strArray=getStr().split('');
-        var vowels='аоуэяиеёюы'; //  для проверки
+var strArray=getStr().split('');
+ var countVowels=0;
+var vowels='аоуэяиеёюы'; //  для проверки
 
 
 //метод forEach
@@ -23,8 +20,6 @@ function vowels(){
           countVowels++; 
     });
     console.log(countVowels + '-количество гласных букв по методу forEach')
- 
-
 
     //метод filter
    var test= strArray.filter((item, i, arr ) => vowels.indexOf(item)!=-1 ).length; 
@@ -36,6 +31,5 @@ function vowels(){
      countVowels++;
      return countVowels;} , 0 );
     console.log(test + '-количество гласных букв по методу reduce');
-         return;
-}
-vowels();
+        
+
