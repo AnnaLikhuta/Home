@@ -8,11 +8,11 @@ function getStr(){
     return answer;
 }
 
-var strArray=getStr().split('');
+function allMethod (){
+   var strArray=getStr();
+   strArray=strArray.toLowerCase().split('');
  var countVowels=0;
-var vowels='аоуэяиеёюы'; //  для проверки
-
-
+ var vowels='аоуэяиеёюы'; //  для проверки
 //метод forEach
    // console.log(strArray);
     strArray.forEach( (item, i, arr) => {  
@@ -31,5 +31,9 @@ var vowels='аоуэяиеёюы'; //  для проверки
      countVowels++;
      return countVowels;} , 0 );
     console.log(test + '-количество гласных букв по методу reduce');
+
+}
+
+allMethod ();
         
 
