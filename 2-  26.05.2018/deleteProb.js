@@ -1,11 +1,38 @@
 
  var str= prompt('Введите слово');
 
-function deleteProb(str) {
-     var check=false;
+function deleteProb(word) {
     var countLeft=0;
-    var countRight=0;
-       for (var i=0; i<=str.length-1; i++ ){
+    var pos;
+    var abc;
+       for (var i=0; i<=str.length-1; i++ ){ //считать пробелы в начале слова
+        if (str[i]==' ' ) {
+             countLeft++;
+             if(countLeft==str.length){
+                break;
+            }
+        }
+        else if (str[i]!=' ' ){
+            break;
+        } }
+
+        str= str.slice(countLeft); //удалить пробелы слева
+           
+          while (str.indexOf(' ')!=-1) {  // убрать пробелы в середине слова и в конце
+            pos=str.indexOf(' ');
+               abc= str.slice(0,pos);
+            str=str.slice(pos+1);
+            str=abc+str;
+           }
+    return str ;
+    }
+
+        // если делать как вы говорите,
+        // 1. Посчитайте пробелы в начале строки.
+        //      2. Посчитайте пробелы в конце строки.
+
+        // я не знаю,как совместить с этим проверку и удаление в середине пробелов.
+        /*      for (var i=0; i<=str.length-1; i++ ){
 
         if (str[i]==' ' && check==false ) {
              countLeft++;
@@ -19,11 +46,7 @@ function deleteProb(str) {
         else if(str[i]==' ' && check==true) {
             countRight++;
            }
-        }
-        str= str.slice(countLeft, -countRight);
-    return str ; 
-    }
-   
+        }  */
 
 
 var cleanWord=deleteProb(str);
@@ -33,3 +56,7 @@ if (cleanWord.length==0){
 else {
     console.log('Ваше итоговое слово: '+'-'+ cleanWord+'-');
 }
+
+//  есть короче вариант :))  
+
+console.log(str.replace(' ',''));

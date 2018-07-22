@@ -2,22 +2,24 @@
     var str=prompt('Ввести фразу для проверки');
     
 
-    function editeWord (str) {  //функция получает строку и выводит boolean
-        var smallStr=str.toLowerCase();  
+    function palindrom (str) {  //функция получает строку и выводит boolean
+        var smallStr=str.toLowerCase();  // к нижнему регистру
         var newStr='';
          for(var i=0; i<=smallStr.length-1; i++){
-            if( (smallStr.charCodeAt(i)>=1072 && smallStr.charCodeAt(i)<=1103) ||   smallStr.charCodeAt(i)==1105 ) {  //проверка только на русские буквы
+            if( (smallStr.charAt(i)>='а' && smallStr.charAt(i)<='я') ||   smallStr.charAt(i)=='ё' ) {  //проверка только на русские буквы
                  if (smallStr.charCodeAt(i)==1098 || smallStr.charCodeAt(i)==1100 ) { // отбрасываем ъ и ь
                      continue;
                  }
+                 if(smallStr.charAt(i)=='ё'){ // заменяем ё на е
+                    smallStr.charAt(i)='е'
+                 }
+
              newStr+=smallStr[i]; // получаем строку только с руссими  буквами
                         }
               }
-     var count=0;
-     for(i=0; i<=newStr.length-1; i++){
-         if ( (newStr[i]==newStr[newStr.length-1-i] )  || 
-          (newStr[i]=='е' &&  newStr[newStr.length-1-i]=='ё' ) ||
-          (newStr[i]=='ё' &&  newStr[newStr.length-1-i]=='е' )  ){
+     for(i=0; i<=(newStr.length)/2; i++){  // проверяем до половины слова,т.к. остальная часть
+                                            // параллельно прошла проверку
+         if ( newStr[i]==newStr[newStr.length-1-i]  ){
               continue;
          }
          else {
@@ -34,6 +36,6 @@
     }
   }
 
-    var count= editeWord(str);
+    var count= palindrom(str);
    printAnswer(count);
 
