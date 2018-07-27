@@ -21,6 +21,7 @@
     var koeffHour= 360*3600/43200;// пересчитываем в секунды,то есть умножаем на 3600
                                  // за полный оборот (360 градусов) проходит 12 часов,что равно 43200 секунд,а 
                                  // за 1 секунду 360/43200
+    var deltaKoeffHour = 360/43200*60;  // перемещение часов стрелки в секунду,  умножаем на количество минут и на 60 секунд. т.к. пока идут минуты,часовая тоже перемещается
 
 
     function pos(elem, valueRadius, valueAngle ) {
@@ -55,15 +56,15 @@ var minuteElem=document.getElementById('minute');
 var hourElem=document.getElementById('hour');
 
 function setPositionArrow(){
-    secondElem.style.display='block';
+    
     secondElem.style.left= startCenterX + secondElem.offsetWidth/2 +'px';
     secondElem.style.top= startCenterY - secondElem.offsetHeight +'px';
     
-    minuteElem.style.display='block';
+   
     minuteElem.style.left= startCenterX +minuteElem.offsetWidth/2 +'px';
     minuteElem.style.top= startCenterY - minuteElem.offsetHeight +'px';
     
-    hourElem.style.display='block';
+    
     hourElem.style.left= startCenterX + hourElem.offsetWidth/2 +'px';
     hourElem.style.top= startCenterY - hourElem.offsetHeight +'px';
 
@@ -76,13 +77,14 @@ function setPositionArrow(){
    function  changePositionClock(obj){
        var second=obj.countSeconds*koeffSecond;  //здесь вычисляется угол поворота стрелки 
        var minute=obj.countMinutes*koeffMinute;  // в зависимости от времени
-       var hour=obj.countHours*koeffHour; 
+       var hour=obj.countHours*koeffHour+obj.countMinutes*deltaKoeffHour; 
 
        secondElem.style.transform='rotate('+second+'deg)'; // заставляем повернуть на нужный угол
        minuteElem.style.transform='rotate('+minute+'deg)';
         hourElem.style.transform='rotate('+hour+'deg)';
 
    }
+    document.addEventListener('DOMContentLoaded',updateTime, false ); // поставить в нужную позицию стрелки сразу
     
 setInterval(updateTime,1000);
 
