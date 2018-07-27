@@ -49,17 +49,27 @@
     start.appendChild(clockDiv); // добавляю в DOM все созданные малые кружочки
 
 // вставить стрелки секундную,мин. и часовую и позиционировать в центр отсчета
+// найти стрелки в DOM
 var secondElem=document.getElementById('second');
-secondElem.style.left= startCenterX + secondElem.offsetWidth/2 +'px';
-secondElem.style.top= startCenterY - secondElem.offsetHeight +'px';
-
 var minuteElem=document.getElementById('minute');
-minuteElem.style.left= startCenterX +minuteElem.offsetWidth/2 +'px';
-minuteElem.style.top= startCenterY - minuteElem.offsetHeight +'px';
-
 var hourElem=document.getElementById('hour');
-hourElem.style.left= startCenterX - hourElem.offsetWidth/2 +'px';
-hourElem.style.top= startCenterY - hourElem.offsetHeight +'px';
+
+function setPositionArrow(){
+    secondElem.style.display='block';
+    secondElem.style.left= startCenterX + secondElem.offsetWidth/2 +'px';
+    secondElem.style.top= startCenterY - secondElem.offsetHeight +'px';
+    
+    minuteElem.style.display='block';
+    minuteElem.style.left= startCenterX +minuteElem.offsetWidth/2 +'px';
+    minuteElem.style.top= startCenterY - minuteElem.offsetHeight +'px';
+    
+    hourElem.style.display='block';
+    hourElem.style.left= startCenterX + hourElem.offsetWidth/2 +'px';
+    hourElem.style.top= startCenterY - hourElem.offsetHeight +'px';
+
+
+}
+
 
    // математика
    
@@ -83,6 +93,7 @@ function updateTime() {
     var currTimeStr=changeFormatDate(objDate);
     document.getElementById('TTT').innerHTML='Текущее время - '+currTimeStr;
     changePositionClock(objDate);
+    setPositionArrow();
 
 }
 
