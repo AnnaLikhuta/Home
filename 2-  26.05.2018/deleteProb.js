@@ -10,13 +10,13 @@ function deleteProb(str) {
              countLeft++;
              if(countLeft==str.length){
                  break;
-             }
+             } 
         }
         else if (str[i]!=' ' ){
             break;
         }
               } 
-
+              console.log(countLeft);
          for ( var j=str.length-1; j>=0; j-- ){
 
                 if (str[j]==' ' ) {
@@ -25,10 +25,13 @@ function deleteProb(str) {
                 else if (str[j]!=' ' ){
                     break;
                 }
-                
                       }
-                     str=str.slice(countLeft,-countRight )
-                     
+                      if (countRight==0){
+                        str=str.slice(countLeft )  
+                      }
+                      else{
+                        str=str.slice(countLeft, -countRight )
+                      }
                       return str  }
 
 
@@ -42,4 +45,4 @@ else {
 
 //  есть короче вариант :))  
 
-console.log(str.replace(' ',''));
+//console.log(str.replace(' ',''));
