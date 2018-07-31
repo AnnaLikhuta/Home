@@ -1,129 +1,163 @@
+var sizeBigCircle=150; // радиус большого круга
+var widthSvgField=400; // размеры поля svg 
+var heightSvgField=400; //// размеры поля svg 
 
-  // описание констант
-  var start= document.getElementById('start'); //основной фоновый циферблат, большой
+var widthSvgFieldX=widthSvgField/2; //  координаты середины поля svg
+var heightSvgFieldY=heightSvgField/2;
 
-  var startCenterX=start.offsetLeft+start.offsetWidth/2; // центр по Х для любых вращений и построений 
-                                                        // относительного большого, фоного круга
-
-   var startCenterY=start.offsetTop+start.offsetHeight/2; // центр по У для любых вращений и построений
-                                                             // относительного большого, фоного круга
-    var deltaSmalClock=25; // размер малых кружков для цифр.из CSS class: .background_small
-    valueAngle=30; // начальный угол для отсчета и построения малых кружков, цифр
-    valueRadius=start.offsetHeight*0.42; // удаление от центра  малых кружов. задаем меньше половины высоты, 42%
-    var  clockDiv=document.createElement('DIV'); // хранилище для маленьких кружочков. чтобы единовременно все ставить в DOM 
-    clockDiv.id='clockDiv';  // добавляем ID
-    var stepAngle=30; // шаг для построения следующего малого кружка в 30 градусов
-
-    var koeffSecond=360/60; // при совершении  полного оборота, 360 градусов, каждую
-                             // секунду смещение/поворот на 6 градусов
-    var koeffMinute=360*60/3600; // пересчитываем минут в секунды- умножаем на 60, а за полный оборот (360 градусов)
-                                 // проходит 3600 секунд,то есть  умножить на 360/3600
-    var koeffHour= 360*3600/43200;// пересчитываем в секунды,то есть умножаем на 3600
-                                 // за полный оборот (360 градусов) проходит 12 часов,что равно 43200 секунд,а 
-                                 // за 1 секунду 360/43200
-    var deltaKoeffHour = 360/43200*60;  // перемещение часов стрелки в секунду,  умножаем на количество минут и на 60 секунд. т.к. пока идут минуты,часовая тоже перемещается
+var radiusSvgSmallCircle=22;// радиус малого шара
 
 
-    function pos(elem, valueRadius, valueAngle ) {
-        //  получаем начальный угол и радиус
-        var radius=parseFloat(valueRadius);
-        var angle=parseFloat(valueAngle)/180*Math.PI;
-        // через sin and cos  узнаем смщение элемента по осям Х и У
-        var elemCenterX=startCenterX+ radius*Math.sin(angle);
-        var elemCenterY=startCenterY-radius*Math.cos(angle);
-        //  прописываем в style  новое положениес учетом размера малого кружка deltaSmalClock
-        elem.style.left=Math.round(elemCenterX - deltaSmalClock/2)+'px';
-        elem.style.top=Math.round(elemCenterY-deltaSmalClock/2)+'px';
-    }
+var valueRadius=sizeBigCircle*0.82; // удаление от центра  малых кружов. задаем меньше радиуса круга, 42%
+var valueAngle=30; // начальный угол для отсчета и построения малых кружков, цифр
+var stepAngle=30; // шаг для построения следующего малого кружка в 30 градусов
+
+var lengthSecondElem=sizeBigCircle*0.7; //длина секундной стрелки
+var lengthMinuteElem=sizeBigCircle*0.55;
+var lengthHourElem=sizeBigCircle*0.45;
+
+var koeffSecond=360/60; // при совершении  полного оборота, 360 градусов, каждую
+                         // секунду смещение/поворот на 6 градусов
+var koeffMinute=360*60/3600; // пересчитываем минут в секунды- умножаем на 60, а за полный оборот (360 градусов)
+                             // проходит 3600 секунд,то есть  умножить на 360/3600
+var koeffHour= 360*3600/43200;// пересчитываем в секунды,то есть умножаем на 3600
+                             // за полный оборот (360 градусов) проходит 12 часов,что равно 43200 секунд,а 
+                             // за 1 секунду 360/43200
+var deltaKoeffHour = 360/43200*60;  // перемещение часов стрелки в секунду,  умножаем на количество минут и на 60 секунд. т.к. пока идут минуты,часовая тоже перемещается
+
+// создать большойфоновый кружок
+ var SSSBasic=document.getElementById('SSS');
+ SSSBasic.setAttribute('width',widthSvgField);
+ SSSBasic.setAttribute('height',heightSvgField);
 
     
-    var elem=[] // массив малых кружков
-     for (var i=1; i<=12; i++){
-     elem[i]= document.createElement('DIV');
-     elem[i].innerHTML=i; // записываем  цифру
-    elem[i].className='background_small';
-    clockDiv.appendChild(elem[i]); // добавляем в промежуточный DIV 
+     var bigCircle= document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+     bigCircle.setAttribute("cx", widthSvgField/2);
+     bigCircle.setAttribute("cy", heightSvgField/2);
+     bigCircle.setAttribute("r", sizeBigCircle);
+     bigCircle.setAttribute("fill", "aqua");
+     SSSBasic.appendChild(bigCircle);
 
-    pos( elem[i],valueRadius, valueAngle ); 
-    valueAngle+=stepAngle;
-    }
-    start.appendChild(clockDiv); // добавляю в DOM все созданные малые кружочки
+     // создаем малые кружки и вписываем цифры
+     function createSvgSmallCircle(){
+        var groupCircle= document.createElementNS('http://www.w3.org/2000/svg','g')
+        for (var i=1; i<=12; i++){
+            var SvgSmallCircle=document.createElementNS('http://www.w3.org/2000/svg','circle');
 
-// вставить стрелки секундную,мин. и часовую и позиционировать в центр отсчета
-// найти стрелки в DOM
-var secondElem=document.getElementById('second');
-var minuteElem=document.getElementById('minute');
-var hourElem=document.getElementById('hour');
-
-function setPositionArrow(){
-    
-    secondElem.style.left= startCenterX + secondElem.offsetWidth/2 +'px';
-    secondElem.style.top= startCenterY - secondElem.offsetHeight +'px';
-    
-   
-    minuteElem.style.left= startCenterX +minuteElem.offsetWidth/2 +'px';
-    minuteElem.style.top= startCenterY - minuteElem.offsetHeight +'px';
-    
-    
-    hourElem.style.left= startCenterX + hourElem.offsetWidth/2 +'px';
-    hourElem.style.top= startCenterY - hourElem.offsetHeight +'px';
+            var radius=parseFloat(valueRadius);
+            var angle=parseFloat(valueAngle)/180*Math.PI;
+            var elemCenterX=widthSvgField/2+ radius*Math.sin(angle);
+            var elemCenterY= heightSvgField/2-radius*Math.cos(angle);
 
 
+            SvgSmallCircle.setAttribute("cx", elemCenterX);
+            SvgSmallCircle.setAttribute("cy", elemCenterY);
+            SvgSmallCircle.setAttribute("r", radiusSvgSmallCircle);
+            SvgSmallCircle.setAttribute("fill", "white");
+           
+            groupCircle.appendChild(SvgSmallCircle);
+
+            var txt=document.createElementNS("http://www.w3.org/2000/svg",'text');
+            txt.setAttribute("x",elemCenterX);
+            txt.setAttribute("y",elemCenterY+radiusSvgSmallCircle/4);
+            txt.style.fill="black";
+            txt.style.fontSize="20px";
+            txt.style.textAnchor="middle";
+            txt.textContent=i;
+            groupCircle.appendChild(txt);
+
+            valueAngle+=stepAngle;
+
+        }
+        SSSBasic.appendChild(groupCircle);
+
+     }
+     createSvgSmallCircle();
+
+
+//создать стрелки
+// секундная
+var secondElem=document.createElementNS("http://www.w3.org/2000/svg",'rect');
+secondElem.setAttribute("x", widthSvgFieldX-4/2);
+secondElem.setAttribute("y", heightSvgFieldY-lengthSecondElem);
+secondElem.setAttribute("width",4);
+secondElem.setAttribute("height",lengthSecondElem);
+secondElem.setAttribute("fill", "black");
+SSSBasic.appendChild(secondElem);
+//минутная
+var minuteElem=document.createElementNS("http://www.w3.org/2000/svg",'rect');
+minuteElem.setAttribute("x", widthSvgFieldX-5/2);
+minuteElem.setAttribute("y", heightSvgFieldY-lengthMinuteElem);
+minuteElem.setAttribute("width",5);
+minuteElem.setAttribute("height",lengthMinuteElem);
+minuteElem.setAttribute("fill", "black");
+SSSBasic.appendChild(minuteElem);
+// часовая
+var hourElem=document.createElementNS("http://www.w3.org/2000/svg",'rect');
+hourElem.setAttribute("x", widthSvgFieldX-6/2);
+hourElem.setAttribute("y", heightSvgFieldY-lengthHourElem);
+hourElem.setAttribute("width",6);
+hourElem.setAttribute("height",lengthHourElem);
+hourElem.setAttribute("fill", "black");
+SSSBasic.appendChild(hourElem);
+
+
+
+function  changePositionClock(obj){
+    var second=obj.countSeconds*koeffSecond;  //здесь вычисляется угол поворота стрелки 
+    var minute=obj.countMinutes*koeffMinute;  // в зависимости от времени
+    var hour=obj.countHours*koeffHour+obj.countMinutes*deltaKoeffHour; 
+
+    // заставляем повернуть на нужный угол
+    secondElem.setAttribute("transform", "rotate("+second+" " +200 +" "+200+")");
+    minuteElem.setAttribute("transform", "rotate(" +minute+" " +200 +" "+200+")");
+    hourElem.setAttribute("transform", "rotate(" +hour+" " +200 +" "+200+")");
 }
 
 
-   // математика
-   
-   function  changePositionClock(obj){
-       var second=obj.countSeconds*koeffSecond;  //здесь вычисляется угол поворота стрелки 
-       var minute=obj.countMinutes*koeffMinute;  // в зависимости от времени
-       var hour=obj.countHours*koeffHour+obj.countMinutes*deltaKoeffHour; 
+updateTime();
+ 
+ // обработка  текущего времени
+ setInterval(updateTime,1000);
 
-       secondElem.style.transform='rotate('+second+'deg)'; // заставляем повернуть на нужный угол
-       minuteElem.style.transform='rotate('+minute+'deg)';
-        hourElem.style.transform='rotate('+hour+'deg)';
-
-   }
-    document.addEventListener('DOMContentLoaded',updateTime, false ); // поставить в нужную позицию стрелки сразу
+ function updateTime() {
+     var currTime=new Date();
+     objDate=formatDateTime(currTime);
     
-setInterval(updateTime,1000);
-
-function updateTime() {
-    var currTime=new Date();
-    objDate=formatDateTime(currTime);
-   
-    var currTimeStr=changeFormatDate(objDate);
-    document.getElementById('TTT').innerHTML='Текущее время - '+currTimeStr;
-    changePositionClock(objDate);
-    setPositionArrow();
-
-}
-
-function formatDateTime(dt) {
-    var year=dt.getFullYear();
-    var month=dt.getMonth()+1;
-    var day=dt.getDate();
-    var hours=dt.getHours();
-    var minutes=dt.getMinutes();
-    var seconds=dt.getSeconds();
-    return {countDay: day,          // вернуть объект в цифрах,чтобы использовать для расчета
-        countHours: hours,
-        countMinutes: minutes,
-        countSeconds: seconds,
-        countMonths: month,
-        countYear: year
-    }
-}
-
-function changeFormatDate(objDate){
-return   str0l(objDate.countDay,2) + '.' + str0l(objDate.countMonths,2)+   '.' + objDate.countYear + ' ' + str0l(objDate.countHours,2) + ':' + str0l(objDate.countMinutes,2) + ':' + str0l(objDate.countSeconds,2);
-
-}
-
-
-function str0l(val,len) {
-    var strVal=val.toString();
-    while ( strVal.length < len )
-        strVal='0'+strVal;
-    return strVal;
-}
+     var currTimeStr=changeFormatDate(objDate);
+     //document.getElementById('TTT').innerHTML='Текущее время - '+currTimeStr;
+     changePositionClock(objDate);
+    // setPositionArrow();
+ 
+ }
+ 
+ function formatDateTime(dt) {
+     var year=dt.getFullYear();
+     var month=dt.getMonth()+1;
+     var day=dt.getDate();
+     var hours=dt.getHours();
+     var minutes=dt.getMinutes();
+     var seconds=dt.getSeconds();
+     return {countDay: day,          // вернуть объект в цифрах,чтобы использовать для расчета
+         countHours: hours,
+         countMinutes: minutes,
+         countSeconds: seconds,
+         countMonths: month,
+         countYear: year
+     }
+ }
+ 
+ function changeFormatDate(objDate){
+ return   str0l(objDate.countDay,2) + '.' + str0l(objDate.countMonths,2)+   '.' + objDate.countYear + ' ' + str0l(objDate.countHours,2) + ':' + str0l(objDate.countMinutes,2) + ':' + str0l(objDate.countSeconds,2);
+ 
+ }
+ 
+ 
+ function str0l(val,len) {
+     var strVal=val.toString();
+     while ( strVal.length < len )
+         strVal='0'+strVal;
+     return strVal;
+ }
+ 
+ 

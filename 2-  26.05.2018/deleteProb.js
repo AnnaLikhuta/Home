@@ -12,9 +12,7 @@ function deleteProb(str) {
                  break;
              } 
         }
-        else if (str[i]!=' ' ){
-            break;
-        }
+        else break;
               } 
               console.log(countLeft);
          for ( var j=str.length-1; j>=0; j-- ){
@@ -22,17 +20,18 @@ function deleteProb(str) {
                 if (str[j]==' ' ) {
                     countRight++;
                                     }
-                else if (str[j]!=' ' ){
-                    break;
-                }
+                else break;
                       }
+
                       if (countRight==0){
                         str=str.slice(countLeft )  
                       }
                       else{
                         str=str.slice(countLeft, -countRight )
                       }
-                      return str  }
+                      return str 
+                    // без этих if вот такой ввод ->( ф)  вернет пустую строку
+                }
 
 
 var cleanWord=deleteProb(str);

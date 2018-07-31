@@ -1,4 +1,6 @@
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+
+
+<svg  xmlns="http://www.w3.org/2000/svg">
 <defs>
 
   <style><![CDATA[
@@ -8,10 +10,13 @@
 
 </defs>
 
-<g  id="circle">
-  <ellipse cy="50" cx="50" ry="25" rx="25" stroke-width="5" stroke="#00ff00" fill="#00ff00" fill-opacity="1" />
+<g class="sprite"  id="circle">
+  <circle  cy="50" cx="50" r="12"  stroke-width="1" stroke="blue" fill="blue" fill-opacity="0.75" />
 </g>
 
-
+<g  class="sprite" id="big_circle">
+  <circle  cy="150" cx="150" r="100"  stroke-width="1" stroke="#00ff00" fill="#00ff00" fill-opacity="0.75" />
+</g>
 
 </svg>
+
