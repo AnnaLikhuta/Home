@@ -1,4 +1,3 @@
-
 var str= prompt('Введите слово');
  var countLeft=0;
  var countRight=0;
@@ -9,7 +8,7 @@ function deleteProb(str) {
         if (str[i]==' ' ) {
              countLeft++;
              if(countLeft==str.length){
-                 return countLeft ;
+                 return '';
              } 
         }
         else break;
@@ -24,17 +23,6 @@ function deleteProb(str) {
                       }
 		str=str.substr(countLeft,str.length-countRight-countLeft)
 		return str;
-/*
-                      if (countRight==0){
-                        str=str.slice(countLeft )  
-                      }
-                      else{
-                        //str=str.slice(countLeft, -countRight );
-			str=str.substr(countLeft,str.length-countRight)
-                      }
-                      return str 
-                    // без этих if вот такой ввод ->( ф)  вернет пустую строку
-*/
                 }
 
 
