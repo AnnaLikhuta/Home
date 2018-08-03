@@ -1,11 +1,11 @@
 var sizeBigCircle=150; // радиус большого круга
-var widthSvgField=400; // размеры поля svg 
-var heightSvgField=400; //// размеры поля svg 
+var widthCnvField=400; // размеры поля canvas 
+var heightCnvField=400; //// размеры поля canvas 
 
-var widthSvgFieldX=widthSvgField/2; //  координаты середины поля svg
-var heightSvgFieldY=heightSvgField/2;
+var widthCnvFieldX=widthCnvField/2; //  координаты середины поля canvas
+var heightCnvFieldY=heightCnvField/2;
 
-var radiusSvgSmallCircle=22;// радиус малого шара
+var radiusCnvSmallCircle=22;// радиус малого шара
 
 
 var valueRadius=sizeBigCircle*0.82; // удаление от центра  малых кружов. задаем меньше радиуса круга, 42%
@@ -16,6 +16,7 @@ var lengthSecondElem=sizeBigCircle*0.7; //длина секундной стре
 var lengthMinuteElem=sizeBigCircle*0.55;
 var lengthHourElem=sizeBigCircle*0.45;
 
+var koeffInRad=Math.PI/180;
 var koeffSecond=360/60; // при совершении  полного оборота, 360 градусов, каждую
                          // секунду смещение/поворот на 6 градусов
 var koeffMinute=360*60/3600; // пересчитываем минут в секунды- умножаем на 60, а за полный оборот (360 градусов)
@@ -25,97 +26,95 @@ var koeffHour= 360*3600/43200;// пересчитываем в секунды,т
                              // за 1 секунду 360/43200
 var deltaKoeffHour = 360/43200*60;  // перемещение часов стрелки в секунду,  умножаем на количество минут и на 60 секунд. т.к. пока идут минуты,часовая тоже перемещается
 
-// создать большойфоновый кружок
- var cvs=document.getElementById('CCC');
- console.log(cvs)
- var context=cvs.getContext('2d');
- context.strokeStyle='black';
- context.arc(widthSvgFieldX,heightSvgFieldY,sizeBigCircle, 0, Math.PI*2, false );
- context.fillStyle='rgb(255,180,50)';
- context.stroke();
 
+
+
+// создать большой фоновый кружок
+var cvs=document.getElementById('CCC');
+cvs.width=widthCnvField;
+cvs.height=heightCnvField;
+
+var context=cvs.getContext('2d');
+context.fillStyle='aqua';
+context.strokeStyle='black';
+context.beginPath();
+context.arc(widthCnvFieldX,heightCnvFieldY,sizeBigCircle, 0, Math.PI*2, false );
+context.fill();
+context.stroke(); 
+
+// создать малые кружки функцией
+
+function createCnvSmallCircle(){
     
-  /*   var bigCircle= document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-     bigCircle.setAttribute("cx", widthSvgField/2);
-     bigCircle.setAttribute("cy", heightSvgField/2);
-     bigCircle.setAttribute("r", sizeBigCircle);
-     bigCircle.setAttribute("fill", "aqua");
-     SSSBasic.appendChild(bigCircle);
+    for (var i=1; i<=12; i++){
+        var radius=parseFloat(valueRadius); //вынессти. не делать через var
+        var angle=parseFloat(valueAngle)/180*Math.PI;
+        var elemCenterX=widthCnvField/2+ radius*Math.sin(angle);
+        var elemCenterY= heightCnvField/2-radius*Math.cos(angle);
 
-     // создаем малые кружки и вписываем цифры
-     function createSvgSmallCircle(){
-        var groupCircle= document.createElementNS('http://www.w3.org/2000/svg','g')
-        for (var i=1; i<=12; i++){
-            var SvgSmallCircle=document.createElementNS('http://www.w3.org/2000/svg','circle');
+        context.fillStyle='white';
+        context.strokeStyle='black';
+        context.beginPath();
+        context.arc(elemCenterX,elemCenterY,radiusCnvSmallCircle, 0, Math.PI*2, false );
+        context.fill();
+        context.stroke(); 
 
-            var radius=parseFloat(valueRadius);
-            var angle=parseFloat(valueAngle)/180*Math.PI;
-            var elemCenterX=widthSvgField/2+ radius*Math.sin(angle);
-            var elemCenterY= heightSvgField/2-radius*Math.cos(angle);
+        context.fillStyle='black';
+        context.font='italic bold 20px Arial';
+        context.strokeText(''+i+'',elemCenterX, elemCenterY );
+        context.textAlign='center';
+        context.textBaseline='middle';
+        valueAngle+=stepAngle;
+
+    }
+
+ }
+ createCnvSmallCircle();
 
 
-            SvgSmallCircle.setAttribute("cx", elemCenterX);
-            SvgSmallCircle.setAttribute("cy", elemCenterY);
-            SvgSmallCircle.setAttribute("r", radiusSvgSmallCircle);
-            SvgSmallCircle.setAttribute("fill", "white");
-           
-            groupCircle.appendChild(SvgSmallCircle);
 
-            var txt=document.createElementNS("http://www.w3.org/2000/svg",'text');
-            txt.setAttribute("x",elemCenterX);
-            txt.setAttribute("y",elemCenterY+radiusSvgSmallCircle/4);
-            txt.style.fill="black";
-            txt.style.fontSize="20px";
-            txt.style.textAnchor="middle";
-            txt.textContent=i;
-            groupCircle.appendChild(txt);
 
-            valueAngle+=stepAngle;
 
-        }
-        SSSBasic.appendChild(groupCircle);
-
-     }
-     createSvgSmallCircle();
 
 
 //создать стрелки
 // секундная
-var secondElem=document.createElementNS("http://www.w3.org/2000/svg",'rect');
-secondElem.setAttribute("x", widthSvgFieldX-4/2);
-secondElem.setAttribute("y", heightSvgFieldY-lengthSecondElem);
-secondElem.setAttribute("width",4);
-secondElem.setAttribute("height",lengthSecondElem);
-secondElem.setAttribute("fill", "black");
-SSSBasic.appendChild(secondElem);
-//минутная
-var minuteElem=document.createElementNS("http://www.w3.org/2000/svg",'rect');
-minuteElem.setAttribute("x", widthSvgFieldX-5/2);
-minuteElem.setAttribute("y", heightSvgFieldY-lengthMinuteElem);
-minuteElem.setAttribute("width",5);
-minuteElem.setAttribute("height",lengthMinuteElem);
-minuteElem.setAttribute("fill", "black");
-SSSBasic.appendChild(minuteElem);
-// часовая
-var hourElem=document.createElementNS("http://www.w3.org/2000/svg",'rect');
-hourElem.setAttribute("x", widthSvgFieldX-6/2);
-hourElem.setAttribute("y", heightSvgFieldY-lengthHourElem);
-hourElem.setAttribute("width",6);
-hourElem.setAttribute("height",lengthHourElem);
-hourElem.setAttribute("fill", "black");
-SSSBasic.appendChild(hourElem);
-
+//var secondElem=cvs.getContext('2d');
+//context.resetTransform();
+var secondElemCnv=cvs.getContext('2d');
 
 
 function  changePositionClock(obj){
-    var second=obj.countSeconds*koeffSecond;  //здесь вычисляется угол поворота стрелки 
-    var minute=obj.countMinutes*koeffMinute;  // в зависимости от времени
-    var hour=obj.countHours*koeffHour+obj.countMinutes*deltaKoeffHour; 
+    var secondGrad=obj.countSeconds*koeffSecond;  //здесь вычисляется угол поворота стрелки 
+    var minuteGrad=obj.countMinutes*koeffMinute;  // в зависимости от времени
+    var hourGrad=obj.countHours*koeffHour+obj.countMinutes*deltaKoeffHour; 
 
-    // заставляем повернуть на нужный угол
-    secondElem.setAttribute("transform", "rotate("+second+" " +200 +" "+200+")");
-    minuteElem.setAttribute("transform", "rotate(" +minute+" " +200 +" "+200+")");
-    hourElem.setAttribute("transform", "rotate(" +hour+" " +200 +" "+200+")");
+ // заставляем повернуть на нужный угол
+        var second= koeffInRad*secondGrad;   //здесь вычисляется угол поворота стрелки 
+    var minute=koeffInRad*minuteGrad ;  // в зависимости от времени
+    var hour=koeffInRad*hourGrad ; 
+
+    
+    secondElemCnv.translate(widthCnvFieldX,heightCnvFieldY)
+    secondElemCnv.rotate(second);
+    //context.setTransform()
+    secondElemCnv.fillRect(-4/2 , 0-lengthSecondElem, 4, lengthSecondElem );
+  
+  
+   context.resetTransform();
+
+/*
+context.translate(widthCnvFieldX,heightCnvFieldY)
+context.rotate(3);
+context.fillRect(-4/2 , 0-lengthMinuteElem, 4, lengthMinuteElem );
+context.resetTransform();
+
+context.translate(widthCnvFieldX,heightCnvFieldY)
+context.rotate(2);
+context.fillRect(-4/2 , 0-lengthHourElem, 4, lengthHourElem );
+
+   */ 
+   
 }
 
 
@@ -163,4 +162,3 @@ updateTime();
          strVal='0'+strVal;
      return strVal;
  } 
- */
