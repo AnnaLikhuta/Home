@@ -28,93 +28,74 @@ var deltaKoeffHour = 360/43200*60;  // перемещение часов стр�
 
 
 
-
-// создать большой фоновый кружок
-var cvs=document.getElementById('CCC');
-cvs.width=widthCnvField;
-cvs.height=heightCnvField;
-
-var context=cvs.getContext('2d');
-context.fillStyle='aqua';
-context.strokeStyle='black';
-context.beginPath();
-context.arc(widthCnvFieldX,heightCnvFieldY,sizeBigCircle, 0, Math.PI*2, false );
-context.fill();
-context.stroke(); 
-
-// создать малые кружки функцией
-
-function createCnvSmallCircle(){
-    
-    for (var i=1; i<=12; i++){
-        var radius=parseFloat(valueRadius); //вынессти. не делать через var
-        var angle=parseFloat(valueAngle)/180*Math.PI;
-        var elemCenterX=widthCnvField/2+ radius*Math.sin(angle);
-        var elemCenterY= heightCnvField/2-radius*Math.cos(angle);
-
-        context.fillStyle='white';
-        context.strokeStyle='black';
-        context.beginPath();
-        context.arc(elemCenterX,elemCenterY,radiusCnvSmallCircle, 0, Math.PI*2, false );
-        context.fill();
-        context.stroke(); 
-
-        context.fillStyle='black';
-        context.font='italic bold 20px Arial';
-        context.strokeText(''+i+'',elemCenterX, elemCenterY );
-        context.textAlign='center';
-        context.textBaseline='middle';
-        valueAngle+=stepAngle;
-
-    }
-
- }
- createCnvSmallCircle();
-
-
-
-
-
-
-
-//создать стрелки
-// секундная
-//var secondElem=cvs.getContext('2d');
-//context.resetTransform();
-var secondElemCnv=cvs.getContext('2d');
-
-
 function  changePositionClock(obj){
+    //  создаем поле canvas
+    var cvs=document.getElementById('CCC');
+    cvs.width=widthCnvField;
+    cvs.height=heightCnvField;
+    // большой круг, циферблат
+    var context=cvs.getContext('2d');
+    context.fillStyle='aqua';
+    context.strokeStyle='black';
+    context.beginPath();
+    context.arc(widthCnvFieldX,heightCnvFieldY,sizeBigCircle, 0, Math.PI*2, false );
+    context.fill();
+    context.stroke(); 
+    
+    // создать малые кружки функцией
+    
+    function createCnvSmallCircle(){
+        
+        for (var i=1; i<=12; i++){
+            var radius=parseFloat(valueRadius); //вынессти. не делать через var
+            var angle=parseFloat(valueAngle)/180*Math.PI;
+            var elemCenterX=widthCnvField/2+ radius*Math.sin(angle);
+            var elemCenterY= heightCnvField/2-radius*Math.cos(angle);
+    
+            context.fillStyle='white';
+            context.strokeStyle='black';
+            context.beginPath();
+            context.arc(elemCenterX,elemCenterY,radiusCnvSmallCircle, 0, Math.PI*2, false );
+            context.fill();
+            context.stroke(); 
+    
+            context.fillStyle='black';
+            context.font='italic bold 20px Arial';
+            context.strokeText(''+i+'',elemCenterX, elemCenterY );
+            context.textAlign='center';
+            context.textBaseline='middle';
+            valueAngle+=stepAngle;
+    
+        }
+     }
+     createCnvSmallCircle();
+    
+     
     var secondGrad=obj.countSeconds*koeffSecond;  //здесь вычисляется угол поворота стрелки 
     var minuteGrad=obj.countMinutes*koeffMinute;  // в зависимости от времени
     var hourGrad=obj.countHours*koeffHour+obj.countMinutes*deltaKoeffHour; 
 
- // заставляем повернуть на нужный угол
-        var second= koeffInRad*secondGrad;   //здесь вычисляется угол поворота стрелки 
-    var minute=koeffInRad*minuteGrad ;  // в зависимости от времени
+    var second= koeffInRad*secondGrad;   //перевод в радианы
+    var minute=koeffInRad*minuteGrad ;  
     var hour=koeffInRad*hourGrad ; 
 
     
-    secondElemCnv.translate(widthCnvFieldX,heightCnvFieldY)
-    secondElemCnv.rotate(second);
-    //context.setTransform()
-    secondElemCnv.fillRect(-4/2 , 0-lengthSecondElem, 4, lengthSecondElem );
-  
-  
-   context.resetTransform();
+    context.translate(widthCnvFieldX,heightCnvFieldY)
+    context.rotate(second);
+    context.fillRect(-4/2 , 0-lengthSecondElem, 4, lengthSecondElem );
+    context.resetTransform();
 
-/*
-context.translate(widthCnvFieldX,heightCnvFieldY)
-context.rotate(3);
-context.fillRect(-4/2 , 0-lengthMinuteElem, 4, lengthMinuteElem );
-context.resetTransform();
+    context.translate(widthCnvFieldX,heightCnvFieldY)
+    context.rotate(minute);
+    context.fillRect(-6/2 , 0-lengthMinuteElem, 6, lengthMinuteElem );
+    context.resetTransform();
 
-context.translate(widthCnvFieldX,heightCnvFieldY)
-context.rotate(2);
-context.fillRect(-4/2 , 0-lengthHourElem, 4, lengthHourElem );
 
-   */ 
-   
+    context.translate(widthCnvFieldX,heightCnvFieldY)
+    context.rotate(hour);
+    context.fillRect(-8/2 , 0-lengthHourElem, 8, lengthHourElem );
+    context.resetTransform();
+
 }
 
 
@@ -126,11 +107,9 @@ updateTime();
  function updateTime() {
      var currTime=new Date();
      objDate=formatDateTime(currTime);
-    
      var currTimeStr=changeFormatDate(objDate);
-     //document.getElementById('TTT').innerHTML='Текущее время - '+currTimeStr;
+     document.getElementById('TTT').innerHTML='Текущее время - '+currTimeStr;
      changePositionClock(objDate);
-    // setPositionArrow();
  
  }
  
