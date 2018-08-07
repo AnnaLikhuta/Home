@@ -61,9 +61,10 @@ function  changePositionClock(obj){
     
             context.fillStyle='black';
             context.font='italic bold 20px Arial';
-            context.strokeText(''+i+'',elemCenterX, elemCenterY );
+            
             context.textAlign='center';
             context.textBaseline='middle';
+            context.strokeText(''+i+'',elemCenterX, elemCenterY );
             valueAngle+=stepAngle;
     
         }

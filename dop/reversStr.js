@@ -1,4 +1,5 @@
-var str=prompt('Введите слово');
+//var str=prompt('Введите слово');
+var str='likhuta';
 
 function reversStr(str){
   return  str.split('').reverse().join('');
@@ -7,3 +8,4 @@ function reversStr(str){
 
 var abc= reversStr(str);
 console.log(abc)
+
