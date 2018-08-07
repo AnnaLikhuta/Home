@@ -30,8 +30,13 @@ function checkWord (where, arrWordWhat){
 
 
 var dictionary=["ТАРА","ЛИПА","ТУРА","ЛУЖА","ПАРК","ЛОЖЬ","ЛУПА","ПЛОТ","МУРА","ПАУК","ПАУТ","ПЛУТ","ЛОЖА","СЛОТ","ПАРА"];
+/*
+var fstW='ЛИСА';
+var fshW='ЛОСЬ';
+*/
 var fstW='МУХА';
 var fshW='СЛОН';
+
 var n=0;
 var bool;
 var abc=[];
