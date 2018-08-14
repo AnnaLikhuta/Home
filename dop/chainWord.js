@@ -18,7 +18,7 @@ function checkWord (where, WordWhat){//where - где проверяем
         if(check!=-1  && abc.indexOf(check)==-1){
             abc.push(check)
         }
-        secondCheck=where.indexOf(WordWhat[i],check); // если к примеру проверяю каждую букву слова МАМА в слове МАЛО
+        secondCheck=where.indexOf(WordWhat[i],check+1); // если к примеру проверяю каждую букву слова МАМА в слове МАЛО
                                                         // и две буквы М с одинаковым номером позиции не будут учтены 
         if(secondCheck!=-1 && abc.indexOf(secondCheck)==-1){
             abc.push(secondCheck);
@@ -37,7 +37,7 @@ function checkWord (where, WordWhat){//where - где проверяем
 var dictionary=["ТАРА","ЛИПА","ТУРА","ЛУЖА","ПАРК","ЛОЖЬ","ЛУПА","ПЛОТ","МУРА","ПАУК","ПАУТ","ПЛУТ","ЛОЖА","СЛОТ","ПАРА"];
 
  // var firstWord='ЛИСА';
-   // var finishWord='ЛОСЬ';
+  //  var finishWord='ЛОСЬ';
 
     var firstWord='МУХА';
    var finishWord='СЛОН';
@@ -51,7 +51,10 @@ var abc=[];
 if(bool==false){
     abc.push(firstWord); // добавляю в цепочку. с него начинаем искать
 }
-while(n<50){  // не доработана функция. поэтому страхуюсь конечным условием
+while(n<5){  // не доработана функция. поэтому страхуюсь конечным условием
+
+//console.log(abc)// итоговая цепочка
+
     for(var i=0; i<=dictionary.length-1; i++){
         bool=checkWord (dictionary[i], firstWord); // сравнение  dictionary[i] с  'ЛИСА'
         
@@ -60,12 +63,14 @@ while(n<50){  // не доработана функция. поэтому стр
             firstWord=dictionary[i];
 
             //break;
-        }
-        bool=checkWord (finishWord, firstWord) // проверка подходит ли итоговое
+ bool=checkWord (finishWord, firstWord) // проверка подходит ли итоговое
         if(bool==true){
             firstWord=finishWord;
+//console.log('ha-ha')
             break;
-        }     
+        }   
+        }
+         
 }
 
 n++;
