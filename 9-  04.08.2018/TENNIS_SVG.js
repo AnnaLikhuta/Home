@@ -1,9 +1,3 @@
- //описать константы
-//         <svg id="SSS" > </svg>
-
-
-
-
 
  var gameFieldHeight=300;
  var gameFieldWidth=500;
