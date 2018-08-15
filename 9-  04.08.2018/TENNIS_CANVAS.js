@@ -212,6 +212,14 @@ var rightRacketObj={
      ballH.posY+=ballH.speedY;
      ballH.update(); // перерисовка мяча
 
+
+
+// перериросовка ракеток
+leftRacketObj.posY+=leftRacketObj.speedY;
+rightRacketObj.posY+=rightRacketObj.speedY;
+
+
+
      // вылетел ли мяч ниже пола?
           if ( ballH.posY+bollSize/2>=gameFieldHeight ) {
             ballH.speedY=-ballH.speedY;
@@ -276,6 +284,18 @@ var rightRacketObj={
 
  //------перемещения ракеток
  
+     // ракетки не движется, когда мячик коснулся стенки
+
+ if(currentState==3){
+    leftRacketObj.speedY=0;
+    rightRacketObj.speedY=0;
+ }
+
+
+
+
+
+ 
  //-------------для ракетки левой
      if(leftRacketObj.posY>=(gameFieldHeight-RacketHeight)) {
         leftRacketObj.posY=gameFieldHeight-RacketHeight;
@@ -301,21 +321,10 @@ if(rightRacketObj.posY<=0) {
     rightRacketObj.posY=0;
 
 }
-    // ракетки не движется, когда мячик коснулся стенки
-    if(currentState==3){ // поставить 3
-        leftRacketObj.speedY=0;
-        rightRacketObj.speedY=0;
-
-    }
 
 
-leftRacketObj.posY+=leftRacketObj.speedY;
-rightRacketObj.posY+=rightRacketObj.speedY;
-
-// перериросовка ракеток
-leftRacketObj.update();
-rightRacketObj.update();
-
+ leftRacketObj.update();
+ rightRacketObj.update();
 
 
    requestAnimationFrame(tick);
@@ -334,6 +343,9 @@ rightRacketObj.update();
      EO=EO||window.event;
      EO.preventDefault();
      // опускать в низ
+     if (currentState==2){
+
+     
      if(EO.keyCode==17){
          leftRacketObj.speedY=4;
      }
@@ -346,13 +358,17 @@ rightRacketObj.update();
      if(EO.keyCode==38){
          rightRacketObj.speedY=-4;
      }
+    }
      
  
  }
   function RacketStop(EO){
      EO=EO||window.event;
      EO.preventDefault();
-     leftRacketObj.speedY=0;
-     rightRacketObj.speedY=0;
+     if(currentState==3) {
+        leftRacketObj.speedY=0;
+        rightRacketObj.speedY=0;
+   
+     }
  
   }

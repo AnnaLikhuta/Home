@@ -194,6 +194,10 @@ function tick() {
     ballH.posX+=ballH.speedX;
     ballH.posY+=ballH.speedY;
 
+    leftRacketObj.posY+=leftRacketObj.speedY;
+    rightRacketObj.posY+=rightRacketObj.speedY;
+
+
     // вылетел ли мяч ниже пола?
     if ( ballH.posY+ballH.height>gameFieldHeight ) {
         ballH.speedY=-ballH.speedY;
@@ -285,16 +289,14 @@ if(rightRacketObj.posY<=0) {
     rightRacketObj.posY=0;
 
 }
+
     // ракетки не движется, когда мячик коснулся стенки
     if(currentState==3){ // поставить 3
         leftRacketObj.speedY=0;
         rightRacketObj.speedY=0;
-
+    
     }
-
-
-leftRacketObj.posY+=leftRacketObj.speedY;
-rightRacketObj.posY+=rightRacketObj.speedY;
+   console.log(leftRacketObj.speedY) 
 
 leftRacketObj.update();
 rightRacketObj.update();
@@ -318,6 +320,9 @@ function RacketMove(EO){
     EO=EO||window.event;
     EO.preventDefault();
     // опускать в низ
+    if (currentState==2){
+
+    
     if(EO.keyCode==17){
         leftRacketObj.speedY=4;
     }
@@ -330,12 +335,14 @@ function RacketMove(EO){
     if(EO.keyCode==38){
         rightRacketObj.speedY=-4;
     }
+}
     
 
 }
  function RacketStop(EO){
     EO=EO||window.event;
     EO.preventDefault();
+
     leftRacketObj.speedY=0;
     rightRacketObj.speedY=0;
 
