@@ -365,10 +365,9 @@ if(rightRacketObj.posY<=0) {
   function RacketStop(EO){
      EO=EO||window.event;
      EO.preventDefault();
-     if(currentState==3) {
-        leftRacketObj.speedY=0;
+            leftRacketObj.speedY=0;
         rightRacketObj.speedY=0;
    
      }
  
-  }
+  
