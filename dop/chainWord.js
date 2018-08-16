@@ -16,11 +16,11 @@ function checkWord (firstWord, finishWord){//where - где проверяем
 
 var dictionary=["ТАРА","ЛИПА","ТУРА","ЛУЖА","ПАРК","ЛОЖЬ","ЛУПА","ПЛОТ","МУРА","ПАУК","ПАУТ","ПЛУТ","ЛОЖА","СЛОТ","ПАРА"];
 
-//  var firstWord='ЛИСА';
-  //  var finishWord='ЛОСЬ';
+ var firstWord='ЛИСА';
+    var finishWord='ЛОСЬ';
 
-    var firstWord='МУХА';
-   var finishWord='СЛОН';
+ //   var firstWord='МУХА';
+ //  var finishWord='СЛОН';
 
 
 var n=0;
@@ -41,12 +41,10 @@ while(bool==false){  // страхуюсь конечным условием.
         }
 
         bool=checkWord (firstWord, finishWord) // проверка подходит ли итоговое
-        if(bool==true && abc.indexOf(firstWord)==-1 ){
-            abc.push(firstWord, finishWord); // добавляю в цепочку. с него начинаем искать
-           // n=50;
-          //     break;
+        if(bool==true ){
+            abc.push(firstWord, finishWord);
+            break;
         }    
-     
 }
 
 //n++;
