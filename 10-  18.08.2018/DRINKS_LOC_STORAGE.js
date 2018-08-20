@@ -55,13 +55,6 @@ function HashStorage (name ){
          return arr;
      }
 
-     //  сохранить в LocalStorage
-     self.addLocalStorage = function (){
-        var key= self.name+'';
-        var value=JSON.stringify(self.objInfo);
-      localStorage.setItem(key, value);
-  
-           }
 
     // записать в LocalStorage при уходе
     self.addLocalStorage = function (){
