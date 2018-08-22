@@ -25,25 +25,31 @@ function HashStorage (name ){
    // добавить данные
    self.addValue = function (key,value){
     self.objInfo[key]=value; 
+    var name= self.name+'';
+    var abc=JSON.stringify(self.objInfo);
+    localStorage.setItem(name, abc);
+
         }
 
     //найти данные в текущем хэше
     self.getValue = function(key){
-        if(key in self.objInfo)
-        return self.objInfo[key];
-        else {
-            return;
-        }
- 
-     }
+      var hashFromJson=JSON.parse(localStorage[self.name]); 
+       if( key in hashFromJson){
+        //console.log(hashFromJson[key]);
+              return hashFromJson[key]; }
+           return false;
+           }
 
      // удалить данные
      self.deleteValue = function(key){
-         if(!self.objInfo[key]){
+      var hashFromJson=JSON.parse(localStorage[self.name]); 
+        if(! hashFromJson[key]){
              return false;
          }
          else
-         delete self.objInfo[key];
+         delete hashFromJson[key];
+       var hashToJson=JSON.stringify(hashFromJson);
+       localStorage.setItem(name, hashToJson);
          return true;
      }
 
@@ -54,15 +60,6 @@ function HashStorage (name ){
        arr.push(k);
          return arr;
      }
-
-
-    // записать в LocalStorage при уходе
-    self.addLocalStorage = function (){
-        var key= self.name+'';
-        var value=JSON.stringify(self.objInfo);
-      localStorage.setItem(key, value);
-  
-           }
 }
 
 // создать объекты
@@ -75,19 +72,27 @@ function askInfoDrink() {
     
     var nameDrink = prompt('Введите название коктеля');
     var costDrink = prompt('Стоимость напитка');
-      drinkStorage.addValue(nameDrink, costDrink);
+    var ingrid = prompt('Ингридиенты');
+
+    var deltaObj={
+      'Стоимость':costDrink,
+      'Ингридиенты': ingrid
+    }
+      drinkStorage.addValue(nameDrink, deltaObj);
 }
 
 function getInfo () {
     var nameCoctail = prompt('Введите название напитка');
     var drink =drinkStorage.getValue(nameCoctail);
+    
     if (drink==undefined){
         console.log('Информации нет по данному коктелю')
     }
     else{
-       
-        console.log(nameCoctail+' стоимость: '+drink);
+       console.log(nameCoctail)
+        console.log(drink);
     }
+    
 }
 
 function deleteCoctail (){
@@ -109,7 +114,13 @@ function askInfoDishes() {
     
     var nameDishes = prompt('Введите название блюда');
     var costDishes = prompt('Стоимость блюда');
-    dishesStorage.addValue(nameDishes, costDishes);
+    var ingrid = prompt('Ингридиенты');
+
+    var deltaObj={
+      'Стоимость':costDishes,
+      'Ингридиенты': ingrid
+    }
+    dishesStorage.addValue(nameDishes, deltaObj);
 }
 
 function getInfoDishes () {
@@ -118,7 +129,8 @@ function getInfoDishes () {
     if (dishes==undefined){
         console.log('Информации нет ')}
     else{
-        console.log(nameDishes+' стоимость: '+dishes);
+      console.log(nameDishes)
+      console.log(dishes);
     }
 }
 
