@@ -1,0 +1,88 @@
+
+ <!DOCTYPE html>
+ <html>
+   <head>
+     <meta charset="UTF-8">
+     
+     <title>TENNIS_DOM</title>
+         <style>
+         span {font-size: 20px;
+                font-weight: bold;
+
+          }
+           body {margin: 0px;}
+            .background_main {background-color: aqua;
+                         height: 300px;
+                          width: 300px;
+                           border-radius: 50%;
+                           position:absolute;}
+            .background_small {background-color: crimson;
+                                height: 25px;
+                                width: 25px;
+                                border-radius: 50%;
+                                position: absolute;
+                               
+                                text-align: center;
+                                vertical-align: middle;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                               }
+            .forSpan {
+                vertical-align: middle;
+                               ;
+            }
+            .second { height: 140px;
+                      width: 2px;
+                      background-color: black;
+                      position:absolute ;
+                      transform-origin: bottom left;
+                      }
+
+            .minute {height: 80px;
+                      width: 4px;
+                      background-color: black;
+                      position:absolute ;
+                      transform-origin: bottom left;
+                     }
+
+            .hour{height: 50px;
+                      width: 8px;
+                      background-color: black;
+                      position:absolute ;
+                      transform-origin: bottom left;
+                      }
+
+            .transformElem {                          
+                         /*   transform: rotate(45deg); */
+                            transform-origin: bottom left;
+
+            }
+           .ClockContainer{
+             background-color:;
+             width: 200px;
+             height: 150px;
+             position: relative;
+             display: inline-block;
+           } 
+       </style>
+        </head>
+       <body>
+        <div id='Clock1Container'  class="ClockContainer"> </div>
+            <div id='Clock2Container' class="ClockContainer"> </div>
+<!-- format 
+        <svg id="SSS" > 
+ 
+        </svg>
+
+        <canvas id="CCC" > </canvas> 
+-->
+
+
+      
+        <script src="CLOCK_MVC_2.js"></script>
+      
+        
+       </body>
+       
+ </html>
