@@ -42,15 +42,15 @@ function HashStorage (name ){
 
      // удалить данные
      self.deleteValue = function(key){
-      var hashFromJson=JSON.parse(localStorage[self.name]); 
+      //var hashFromJson=JSON.parse(localStorage[self.name]); 
         if(! self.objInfo[key]){
              return false;
          }
-         else
+         else{
          delete self.objInfo[key];
        var hashToJson=JSON.stringify(self.objInfo);
        localStorage.setItem(self.name, hashToJson);
-         return true;
+         return true;}
      }
 
      // получить полный список элементов хэша, т.е.ключей
