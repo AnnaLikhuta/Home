@@ -1,4 +1,4 @@
-//добавлять название напитка и цена
+﻿//добавлять название напитка и цена
 //   название блюда- цена
 
 //localStorage.clear(); //очистить
@@ -25,7 +25,7 @@ function HashStorage (name ){
    // добавить данные
    self.addValue = function (key,value){
     self.objInfo[key]=value; 
-    var name= self.name+'';
+   // var name= self.name+'';
     var abc=JSON.stringify(self.objInfo);
     localStorage.setItem(name, abc);
 
@@ -33,32 +33,33 @@ function HashStorage (name ){
 
     //найти данные в текущем хэше
     self.getValue = function(key){
-      var hashFromJson=JSON.parse(localStorage[self.name]); 
-       if( key in hashFromJson){
+    //  var hashFromJson=JSON.parse(localStorage[self.name]); 
+       if( key in self.objInfo){
         //console.log(hashFromJson[key]);
-              return hashFromJson[key]; }
+              return self.objInfo[key]; }
            return false;
            }
 
      // удалить данные
      self.deleteValue = function(key){
       var hashFromJson=JSON.parse(localStorage[self.name]); 
-        if(! hashFromJson[key]){
+        if(! self.objInfo[key]){
              return false;
          }
          else
-         delete hashFromJson[key];
-       var hashToJson=JSON.stringify(hashFromJson);
-       localStorage.setItem(name, hashToJson);
+         delete self.objInfo[key];
+       var hashToJson=JSON.stringify(self.objInfo);
+       localStorage.setItem(self.name, hashToJson);
          return true;
      }
 
      // получить полный список элементов хэша, т.е.ключей
      self.getKeys = function(){
-         var arr=[];
-         for (var k in self.objInfo)
-       arr.push(k);
-         return arr;
+        // var arr=[];
+       //  for (var k in self.objInfo)
+       //arr.push(k);
+         //return arr;
+	 return Object.keys(self.objInfo)
      }
 }
 
