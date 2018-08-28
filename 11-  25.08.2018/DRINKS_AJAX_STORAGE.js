@@ -1,18 +1,89 @@
 
 
-//добавлять название напитка и цена
-//   название блюда- цена
 
-localStorage.clear(); //очистить
+// записать при уходе на сервер
+// получить из локал
+
+
+function  saveAJAXStorage(abc){
+  var ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+var updatePassword;
+var stringName='LIKHUTA_DRINKS_AJAX_STORAGE';
+
+function storeInfo() {
+
+    updatePassword=Math.random();
+    $.ajax( {
+            url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+            data : { f : 'LOCKGET', n : stringName, p : updatePassword },
+            success : lockGetReady, error : errorHandler
+        }
+    );
+}
+
+function lockGetReady(callresult) {
+    if ( callresult.error!=undefined )
+        alert(callresult.error); 
+    else {
+        // нам всё равно, что было прочитано - 
+        // всё равно перезаписываем
+        var info=abc;
+        $.ajax( {
+                url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+                data : { f : 'UPDATE', n : stringName, v : JSON.stringify(info), p : updatePassword },
+                success : updateReady, error : errorHandler
+            }
+        );
+    }
+}
+
+function updateReady(callresult) {
+    if ( callresult.error!=undefined )
+        alert(callresult.error); 
+}
+function errorHandler(jqXHR,statusStr,errorStr) {
+  alert(statusStr+' '+errorStr);
+}
+
+storeInfo();
+//-----------------------------------------------------------
+/*
+// читать с сервера
+function restoreInfo() {
+  $.ajax(
+      {
+          url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+          data : { f : 'READ', n : stringName },
+          success : readReady, error : errorHandler
+      }
+  );
+}
+
+function readReady(callresult) {
+  if ( callresult.error!=undefined )
+      alert(callresult.error); 
+  else if ( callresult.result!="" ) {
+      var info=JSON.parse(callresult.result); 
+      console.log(info)
+  }
+}
+//restoreInfo();
+*/
+}
+
+
+
 //создать класс
 
-function HashStorage (name ){
+function AJAXStorage (name ){
 
   //дать имя  drink / dishes
   var self=this; 
   self.name=name;
 
-  //создать объект для хранения данных - ключ:значение
+self.updatePassword;
+
+  //создать объект для хранения данных, местный - ключ:значение
   self.objInfo={};
 
   // проверка. есть в LocalStorage данные с предыдущего раза
@@ -22,14 +93,17 @@ function HashStorage (name ){
     // console.log(self.objInfo)
 
  }
- 
+
 
  // добавить данные
  self.addValue = function (key,value){
   self.objInfo[key]=value; 
  // var name= self.name+'';
-  var abc=JSON.stringify(self.objInfo);
-  localStorage.setItem(name, abc);
+  self.abc=JSON.stringify(self.objInfo);
+  localStorage.setItem(self.name, self.abc);
+  console.log(self.objInfo)
+  // правильно ли, что LocalStorage перезаписывается всегда весь?
+  saveAJAXStorage(localStorage)
 
       }
 
@@ -52,23 +126,20 @@ function HashStorage (name ){
        delete self.objInfo[key];
      var hashToJson=JSON.stringify(self.objInfo);
      localStorage.setItem(self.name, hashToJson);
+     saveAJAXStorage(localStorage)
        return true;}
    }
 
    // получить полный список элементов хэша, т.е.ключей
    self.getKeys = function(){
-      // var arr=[];
-     //  for (var k in self.objInfo)
-     //arr.push(k);
-       //return arr;
  return Object.keys(self.objInfo)
    }
 }
 
 // создать объекты
 
-var drinkStorage= new HashStorage ('drink');
-var dishesStorage= new HashStorage ('dishes');
+var drinkStorage= new AJAXStorage ('drink');
+var dishesStorage= new AJAXStorage ('dishes');
 
 
 function askInfoDrink() {
@@ -148,7 +219,4 @@ function allDishes (){
   var result = dishesStorage.getKeys();
   console.log( result.join(', ') );
 
-
 }
-
-
