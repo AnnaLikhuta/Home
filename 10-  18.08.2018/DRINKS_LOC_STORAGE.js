@@ -9,6 +9,8 @@ function HashStorage (name ){
   //дать имя  drink / dishes
   var self=this; 
   self.name=name;
+   console.log(self.name)
+
 
   //создать объект для хранения данных - ключ:значение
   self.objInfo={};
@@ -16,7 +18,9 @@ function HashStorage (name ){
   // проверка. есть в LocalStorage данные с предыдущего раза
  if( localStorage[self.name] ) {
      //преобразовать в js. загружаем в текущий хэш, с которым будем работать
-     self.objInfo=JSON.parse(localStorage[self.name]);
+
+   self.objInfo=JSON.parse(localStorage[self.name]);
+
     // console.log(self.objInfo)
 
  }
@@ -26,8 +30,8 @@ function HashStorage (name ){
  self.addValue = function (key,value){
   self.objInfo[key]=value; 
  // var name= self.name+'';
-  var abc=JSON.stringify(self.objInfo);
-  localStorage.setItem(name, abc);
+ self.abc=JSON.stringify(self.objInfo);
+  localStorage.setItem(self.name,self.abc);
 
       }
 
@@ -67,6 +71,7 @@ function HashStorage (name ){
 
 var drinkStorage= new HashStorage ('drink');
 var dishesStorage= new HashStorage ('dishes');
+console.log(localStorage)
 
 
 function askInfoDrink() {
@@ -148,5 +153,6 @@ function allDishes (){
 
 
 }
+
 
 
