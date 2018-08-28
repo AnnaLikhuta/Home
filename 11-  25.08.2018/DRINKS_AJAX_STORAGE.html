@@ -1,0 +1,47 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+	
+    <title>drink AJAX</title>
+        <style>
+           input {margin: 5px;}
+            .ask-button {background-color:  hotpink;
+             height: 50px; 
+            text-shadow: -1px -1px black;
+             font-size: 16px; border-radius: 10px; 
+             outline: none; border-right: none;
+              border-bottom: none; box-shadow: 
+              2px 3px 5px black; 
+               position: relative;}  
+            .ask-button_dishesh {background-color:  aqua; 
+            height: 50px; text-shadow: -1px -1px black;
+             font-size: 16px;
+              border-radius: 10px;
+              outline: none;
+               border-right: none;
+               border-bottom: none;
+               box-shadow: 2px 3px 5px black;
+                 position: relative;}  
+
+            .ask-button:hover { top:2px; left: 1px;  }
+            .ask-button:active {  box-shadow: none; transition: 0.4s linear;}   
+      </style>
+<script src="DRINKS_AJAX_STORAGE.js"></script>
+      
+       </head>
+      <body>
+          
+          <label for='enter'>  <input type="button" value="Ввод информации о напитке" onclick="askInfoDrink()  "  name='enter' id="forArray" class="ask-button"> </label>
+        
+        <input type="button" value="Получение информации о напитке" onclick=" getInfo()  "  id="search"  class="ask-button"  >
+          
+         <input type="button" value="Удаление информации о напитке" onclick="deleteCoctail()   "  id="listArray"  class="ask-button">
+          
+           <input type="button" value="Перечень всех напитков" onclick="allCoctail() "  id="deleteArray"  class="ask-button">
+      </body>
+      
+</html>
+
