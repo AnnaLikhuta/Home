@@ -3,12 +3,12 @@
 
 // записать при уходе на сервер
 // получить из локал
+var ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+var stringName='LIKHUTA_DRINKS_AJAX_STORAGE';
 
 
 function  saveAJAXStorage(abc){
-  var ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
 var updatePassword;
-var stringName='LIKHUTA_DRINKS_AJAX_STORAGE';
 
 function storeInfo() {
 
@@ -46,10 +46,24 @@ function errorHandler(jqXHR,statusStr,errorStr) {
 }
 
 storeInfo();
-//-----------------------------------------------------------
+
+
+}
+//------------------------------- 
+//--------------------------------
+
+    //  возникли трудности при возрате с сервера. READ
+    // return  не сделаешь для вызова restoreInfo()
+    // и  оборачивать ее в еще одну функцию не вариант.
+    // как потом дальше передавать  то, что сделал READ?
+    // restoreInfo() - работает с переменными только из своего окружения?
+
 /*
-// читать с сервера
+
+function readAJAX(){
+  
 function restoreInfo() {
+  var lastSession;
   $.ajax(
       {
           url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
@@ -57,25 +71,30 @@ function restoreInfo() {
           success : readReady, error : errorHandler
       }
   );
+  console.log(lastSession);
+
 }
 
 function readReady(callresult) {
   if ( callresult.error!=undefined )
       alert(callresult.error); 
   else if ( callresult.result!="" ) {
-      var info=JSON.parse(callresult.result); 
-      console.log(info)
+     lastSession=JSON.parse(callresult.result); 
+    console.log(lastSession);
   }
 }
-//restoreInfo();
-*/
+
+function errorHandler(jqXHR,statusStr,errorStr) {
+  alert(statusStr+' '+errorStr);
 }
-
-
+restoreInfo();
+}
+readAJAX();
+*/
 
 //создать класс
 
-function AJAXStorage (name ){
+function AJAXStorage (name, ){
 
   //дать имя  drink / dishes
   var self=this; 
@@ -86,47 +105,54 @@ self.updatePassword;
   //создать объект для хранения данных, местный - ключ:значение
   self.objInfo={};
 
-  // проверка. есть в LocalStorage данные с предыдущего раза
- if( localStorage[self.name] ) {
-     //преобразовать в js. загружаем в текущий хэш, с которым будем работать
-     self.objInfo=JSON.parse(localStorage[self.name]);
-    // console.log(self.objInfo)
-
- }
-
+  //записатьс сервера
+  self.restoreInfo=function () {
+    $.ajax(
+        {
+            url : ajaxHandlerScript, type : 'POST', cache : false, dataType:'json',
+            data : { f : 'READ', n : stringName },
+            success : self.readReady, error : errorHandler
+        }
+    );
+  }
+  
+  self.readReady=function (callresult) {
+    if ( callresult.error!=undefined )
+        alert(callresult.error); 
+    else if ( callresult.result!="" ) {
+      self.objInfo=JSON.parse(callresult.result); 
+      
+    }
+  }
+  
+  function errorHandler(jqXHR,statusStr,errorStr) {
+    alert(statusStr+' '+errorStr);
+  }
+  self.restoreInfo()
 
  // добавить данные
  self.addValue = function (key,value){
   self.objInfo[key]=value; 
- // var name= self.name+'';
-  self.abc=JSON.stringify(self.objInfo);
-  localStorage.setItem(self.name, self.abc);
   console.log(self.objInfo)
-  // правильно ли, что LocalStorage перезаписывается всегда весь?
-  saveAJAXStorage(localStorage)
+  saveAJAXStorage(self.objInfo)
 
       }
 
   //найти данные в текущем хэше
   self.getValue = function(key){
-  //  var hashFromJson=JSON.parse(localStorage[self.name]); 
      if( key in self.objInfo){
-      //console.log(hashFromJson[key]);
             return self.objInfo[key]; }
          return false;
          }
 
    // удалить данные
    self.deleteValue = function(key){
-    //var hashFromJson=JSON.parse(localStorage[self.name]); 
       if(! self.objInfo[key]){
            return false;
        }
        else{
        delete self.objInfo[key];
-     var hashToJson=JSON.stringify(self.objInfo);
-     localStorage.setItem(self.name, hashToJson);
-     saveAJAXStorage(localStorage)
+     saveAJAXStorage(self.objInfo)
        return true;}
    }
 
@@ -139,7 +165,7 @@ self.updatePassword;
 // создать объекты
 
 var drinkStorage= new AJAXStorage ('drink');
-var dishesStorage= new AJAXStorage ('dishes');
+//var dishesStorage= new AJAXStorage ('dishes');
 
 
 function askInfoDrink() {
@@ -181,7 +207,7 @@ function allCoctail (){
   console.log( result.join(', ') );
 
 }
-
+/*
 //для блюд
 
 function askInfoDishes() {
@@ -220,3 +246,4 @@ function allDishes (){
   console.log( result.join(', ') );
 
 }
+*/
