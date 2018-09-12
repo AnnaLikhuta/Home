@@ -9,13 +9,13 @@
            body {margin:0px; }
          .gameDiv {
            position: absolute;
-           width: 80vw;
-           height: 80vw;
+           width: 60vw;
+           height: 60vw;
            max-width: 500px;
            max-height: 500px;
            
            top: 50px;
-           background-color:magenta;
+           background-color:;
            min-height: 0px;
            left: 20px;
            display: inline-block;
@@ -45,22 +45,32 @@
         </head>
        <body>
       
-<div class="gameDiv" id="gameDiv">
-    <svg id="start" xmlns="http://www.w3.org/2000/svg">
+        <svg  xmlns='http://www.w3.org/2000/svg' viewBox="0 0 1000 1000"  >
 
-      <image  xlink:href="forKing.svg" class="beforeForKing"
-      id="SVGKing1" width='50' height='50' x='200' y='200'> </image>
+      
+ 
+    <!--     <use xlink:href='forKing.svg#test'  class="beforeForKing"  id="SVGKing1" />  
 
-  <!--     <use xlink:href='forKing.svg#test'  class="beforeForKing"  id="SVGKing1" />  
+
+      <use xlink:href='forKing.svg#test'  x='500' y='100'/>
+
+
         <image  xlink:href='forKing.svg#test' class="beforeForKing"
          id="SVGKing1" width='200' height='200'> </image>
           -->
-    </svg>
-
-</div>
+  </svg> 
               
            
-        <script src="gamefield.js"></script>
+        <script>
+          var a=0;
+        while(a<5 && a>2){
+          console.log(a);
+          a++;
+        }
+        
+        
+        
+        </script>
         
  
         
